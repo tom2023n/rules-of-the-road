@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rules of the Road – 55 Q&A</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6; margin: 0; padding: 12px; background:#f7f7f7; }
+    h1 { text-align: center; font-size: 22px; margin: 12px 0; }
+    .hint { text-align:center; font-size:14px; color:#555; margin-bottom:12px; }
+    .card { background: #fff; border-radius: 14px; padding: 18px; margin-bottom: 16px; box-shadow: 0 4px 10px rgba(0,0,0,.08); }
+    .q { font-weight: 700; font-size: 20px; margin-bottom: 10px; }
+    .a { font-size: 18px; margin-bottom: 8px; }
+    .cn { color: #444; font-size: 16px; margin: 10px 0; }
+    .btn-row { margin-top: 12px; display: flex; gap: 10px; }
+    button { flex:1; padding: 14px 0; font-size: 16px; border: none; border-radius: 10px; cursor: pointer; }
+    .speak-q { background: #2563eb; color: #fff; }
+    .speak-a { background: #16a34a; color: #fff; }
+  </style>
+</head>
+<body>
+  <h1>Rules of the Road – 55 Q&A</h1>
+  <p class="hint">📱 手机背题模式｜大字版｜左右滑动继续往下刷</p>
+
+  <div id="content"></div>
+
+  <script>
+    const data = [
+      { q: "When can you overtake on the left?", a: "You can overtake on the left when the vehicle ahead is turning right, when you are turning left immediately after overtaking, or in slow moving traffic.", cn: "什么时候可以从左侧超车？\\n当前车右转；你超车后立刻左转；或在缓慢行驶的车流中。" },
+      { q: "At an uncontrolled junction of equal importance to whom would you give the right of way?", a: "Traffic on your right or traffic already in the junction.", cn: "在无信号、同等重要的路口应让谁先行？\\n让右侧来车或已在路口内的车辆先行。" },
+      { q: "What is a box junction and what rules apply?", a: "A yellow criss-cross area you must not enter unless your exit is clear. You may wait if turning right and not blocking traffic.", cn: "什么是黄色网格路口？规则是什么？\\n除非出口畅通，否则不得进入；右转且不造成阻塞时可在内等待。" },
+      { q: "What is a clearway?", a: "An area where stopping or parking is prohibited during certain times, except for buses or taxis.", cn: "什么是 Clearway（禁止停车路段）？\\n在标明时间内禁止停车或停靠（公交或出租车除外）。" },
+      { q: "When should you dip your headlights?", a: "For oncoming traffic, when behind another vehicle in a well-lit area, in fog or falling snow, and at the beginning or end of lighting hours.", cn: "什么时候需要切换近光灯？\\n会车时；跟车且道路明亮时；大雾或下雪时；照明时间开始或结束时。" },
+      { q: "What is a safe distance to travel behind another vehicle?", a: "A minimum two-second gap, doubled in wet conditions.", cn: "与前车保持的安全距离是多少？\\n至少 2 秒距离，雨天加倍。" },
+      { q: "What is the minimum tread depth on a tyre?", a: "1.6 millimetres (1 millimetre for motorcycles and vintage cars).", cn: "轮胎最小花纹深度是多少？\\n普通车辆 1.6 毫米；摩托车和老爷车 1 毫米。" },
+      { q: "What is the legal parking distance from the kerb?", a: "Within 45 centimetres.", cn: "停车时与路缘的合法距离是多少？\\n不超过 45 厘米。" },
+      { q: "What is the legal parking distance from a junction?", a: "5 metres.", cn: "距离路口多少米内不能停车？\\n5 米以内。" },
+      { q: "What regulations apply to the use of the horn?", a: "Do not use the horn in built-up areas between 11:30pm and 7:00am unless in an emergency.", cn: "喇叭的使用规定是什么？\\n在居民区 23:30–07:00 之间禁止鸣笛，紧急情况除外。" },
+      { q: "What does an amber traffic light mean?", a: "Stop if you can safely do so.", cn: "黄灯表示什么？\\n如果安全，应当停车。" },
+      { q: "What does a red traffic light mean?", a: "Stop.", cn: "红灯表示什么？\\n必须停车。" },
+      { q: "What does a green traffic light mean?", a: "Proceed with caution if it is safe to do so.", cn: "绿灯表示什么？\\n确认安全后谨慎通行。" },
+      { q: "What does a flashing amber traffic light mean?", a: "Proceed if the crossing is clear but pedestrians have right of way.", cn: "闪烁黄灯表示什么？\\n若路口清空可通行，但行人优先。" },
+      { q: "What does flashing red lights mean?", a: "Stop. A train is approaching.", cn: "闪烁红灯表示什么？\\n必须停车，有火车接近。" },
+      { q: "What does a continuous white line mean?", a: "You must not cross it or park opposite it.", cn: "连续白线表示什么？\\n不得跨越，也不能在其对面停车。" },
+      { q: "What does a continuous white line with a broken line beside it mean?", a: "Overtaking is allowed on the broken line side only.", cn: "实线加虚线表示什么？\\n只能在虚线一侧超车。" },
+      { q: "What does a continuous yellow line mean?", a: "No parking during certain hours.", cn: "单黄线表示什么？\\n在规定时间内禁止停车。" },
+      { q: "What do double yellow lines mean?", a: "No parking at any time.", cn: "双黄线表示什么？\\n任何时间都禁止停车。" },
+      { q: "What does a broken yellow line mean?", a: "It marks the edge of the road or hard shoulder.", cn: "虚黄线表示什么？\\n表示道路边缘或应急车道。" },
+      { q: "What do white zigzag lines mean?", a: "No stopping, parking, or overtaking near pedestrian crossings.", cn: "白色锯齿线表示什么？\\n人行横道前后禁止停车、超车或停留。" },
+      { q: "How would you know you are entering a one-way street from the wrong end?", a: "No-entry signs, road markings, and continuous white lines facing you.", cn: "如何判断逆向进入单行道？\\n看到禁止驶入标志、路面标识或实线朝向你。" },
+      { q: "Where would you stop if a stop sign had no white line?", a: "At the stop sign.", cn: "如果 Stop 标志没有停车线，应在哪里停车？\\n在标志牌处停车。" },
+      { q: "Give examples of where you should not park.", a: "Near bends, junctions, bus stops, entrances, on footpaths, or obstructing signs.", cn: "举例说明哪些地方不能停车。\\n弯道、路口、公交站、出入口、人行道或遮挡标志处。" },
+      { q: "What should you do if you had an accident?", a: "Stop.", cn: "发生事故后应该怎么做？\\n必须停车。" },
+      { q: "What does the island in the centre of a pedestrian crossing mean?", a: "Each side is a separate crossing.", cn: "人行横道中间的安全岛表示什么？\\n两侧是独立的过街区域。" },
+      { q: "When can you drive in the hard shoulder?", a: "Temporarily to allow another vehicle to overtake, if clear.", cn: "什么时候可以驶入应急车道？\\n临时让行他车超越且确保安全时。" },
+      { q: "What is the maximum distance between a towing vehicle and trailer?", a: "No more than 4.5 metres.", cn: "牵引车辆与拖车最大间距是多少？\\n不超过 4.5 米。" },
+      { q: "When towing, if distance exceeds 1.5 metres what must you do?", a: "Attach a warning device such as a white flag.", cn: "拖车距离超过 1.5 米时需要做什么？\\n必须系挂明显警示物（如白旗）。" },
+      { q: "How close can you park to a pedestrian crossing?", a: "15 metres before or 5 metres after.", cn: "距离人行横道多少米内不能停车？\\n前 15 米、后 5 米内。" },
+      { q: "What procedure must you adopt when crossing a dual carriageway with a narrow median?", a: "Wait until you can cross in one movement.", cn: "穿越中央隔离带很窄的双向分道时应如何操作？\\n必须等待一次性完成通过。" },
+      { q: "What is the main difference between a motorway and a dual carriageway?", a: "Motorways have no right turns, no traffic lights, no stopping, and higher speed limits.", cn: "高速公路与双车道公路的主要区别是什么？\\n高速公路无右转、无红绿灯、不可停车、限速更高。" },
+      { q: "What should you watch out for on country roads?", a: "Pedestrians, animals, mud, hidden entrances, and slow farm vehicles.", cn: "乡村道路需要注意什么？\\n行人、动物、泥泞路面、隐蔽出入口和农用车辆。" },
+      { q: "What is the maximum speed limit on a motorway?", a: "120 kilometres per hour.", cn: "高速公路最高限速是多少？\\n120 公里/小时。" },
+      { q: "When being overtaken, what must you not do?", a: "Do not increase your speed.", cn: "被超车时不能做什么？\\n不能加速。" },
+      { q: "How would you recognise a zebra crossing at night?", a: "By flashing amber beacons.", cn: "夜间如何识别斑马线？\\n通过闪烁的黄灯。" },
+      { q: "What position should you take to turn right from a one-way street?", a: "The extreme right-hand lane.", cn: "从单行道右转应处于什么位置？\\n最右侧车道。" },
+      { q: "Where would you never do a U-turn?", a: "On one-way streets, near continuous white lines, or where prohibited by signs.", cn: "哪些地方绝不能掉头？\\n单行道、实线处或有禁止标志的地方。" },
+      { q: "What is a contra-flow bus lane?", a: "A bus lane running opposite to traffic flow.", cn: "什么是逆向公交专用道？\\n与普通车流方向相反的公交道。" },
+      { q: "What is a with-flow bus lane?", a: "A bus lane running in the same direction as traffic.", cn: "什么是同向公交专用道？\\n与普通车流同方向的公交道。" },
+      { q: "What is meant by tailgating?", a: "Driving too close to the vehicle in front.", cn: "什么是跟车过近？\\n与前车距离不足。" },
+      { q: "What factors can afflict your driving?", a: "Alcohol, drugs, fatigue, road rage, and aggression.", cn: "哪些因素会影响驾驶？\\n酒精、药物、疲劳、路怒和攻击性行为。" },
+      { q: "When may you use the outside lane of a dual carriageway?", a: "When overtaking or preparing to turn right.", cn: "什么时候可以使用双车道外侧车道？\\n超车或即将右转时。" },
+      { q: "What does a red triangle indicate?", a: "A serious hazard such as an accident or breakdown.", cn: "红色三角标志表示什么？\\n前方有严重危险，如事故或故障。" },
+      { q: "What is coasting and why is it dangerous?", a: "Driving with clutch down or in neutral, reducing control.", cn: "什么是空挡滑行？为什么危险？\\n离合踩下或挂空挡行驶，会降低车辆控制。" },
+      { q: "How far from a pedestrian crossing must you be if crossing elsewhere?", a: "At least 15 metres away.", cn: "不走人行横道过马路时应离多远？\\n至少 15 米以外。" },
+      { q: "Who is responsible for wearing seat belts?", a: "Drivers for under 16s; individuals over 17.", cn: "谁负责系安全带？\\n16 岁以下由司机负责，17 岁以上自行负责。" },
+      { q: "Where should you not overtake?", a: "At bends, hills, crossings, white lines, or obstructed views.", cn: "哪些地方不能超车？\\n弯道、坡顶、人行横道、实线或视线受阻处。" },
+      { q: "What must you check before starting the engine?", a: "Handbrake on and vehicle in neutral.", cn: "启动发动机前要检查什么？\\n手刹已拉起，挡位在空挡。" },
+      { q: "What colour light follows amber?", a: "Red.", cn: "黄灯后面是什么灯？\\n红灯。" },
+      { q: "What is the national speed limit in Ireland?", a: "100 kilometres per hour.", cn: "爱尔兰国家道路限速是多少？\\n100 公里/小时。" },
+      { q: "Who can legally stop your vehicle?", a: "Emergency services, traffic wardens, and animal handlers.", cn: "哪些人可以合法拦停你的车辆？\\n紧急服务人员、交通管理员和动物管理人员。" },
+      { q: "When may you drive on a pedestrianised street?", a: "Never, unless signs permit it.", cn: "什么时候可以在步行街行驶？\\n除非有标志允许，否则不可以。" },
+      { q: "When may you stop or park at a clearway or continuous yellow line?", a: "Never, unless signs allow it.", cn: "什么时候可以在 Clearway 或黄线停车？\\n除非有标志允许，否则不可以。" },
+      { q: "If driving alone, how can you check brake lights?", a: "Reverse near a reflective surface and press the brake.", cn: "独自一人如何检查刹车灯？\\n倒车到反光物体前，踩刹车观察反射。" }
+    ];
+
+    const container = document.getElementById('content');
+
+    function speak(text) {
+      const msg = new SpeechSynthesisUtterance(text);
+      msg.lang = 'en-IE';
+      speechSynthesis.speak(msg);
+    }
+
+    data.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const q = document.createElement('div');
+      q.className = 'q';
+      q.textContent = `${i + 1}. ${item.q}`;
+
+      const a = document.createElement('div');
+      a.className = 'a';
+      a.textContent = item.a;
+
+      const cn = document.createElement('div');
+      cn.className = 'cn';
+      cn.innerHTML = item.cn.split('\\n').join('<br>');
+
+      const btnRow = document.createElement('div');
+      btnRow.className = 'btn-row';
+
+      const btnQ = document.createElement('button');
+      btnQ.className = 'speak-q';
+      btnQ.textContent = '🔊 Question';
+      btnQ.addEventListener('click', () => speak(item.q));
+
+      const btnA = document.createElement('button');
+      btnA.className = 'speak-a';
+      btnA.textContent = '🔊 Answer';
+      btnA.addEventListener('click', () => speak(item.a));
+
+      btnRow.append(btnQ, btnA);
+      card.append(q, a, cn, btnRow);
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
