@@ -1,30 +1,299 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>Rules of the Road – 55 Q&A</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>爱尔兰路考 55 Q&A</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6; margin: 0; padding: 12px; background:#f7f7f7; }
-    h1 { text-align: center; font-size: 22px; margin: 12px 0; }
-    .hint { text-align:center; font-size:14px; color:#555; margin-bottom:12px; }
-    .card { background: #fff; border-radius: 14px; padding: 18px; margin-bottom: 16px; box-shadow: 0 4px 10px rgba(0,0,0,.08); }
-    .q { font-weight: 700; font-size: 20px; margin-bottom: 10px; }
-    .a { font-size: 18px; margin-bottom: 8px; }
-    .cn { color: #444; font-size: 16px; margin: 10px 0; }
-    .btn-row { margin-top: 12px; display: flex; gap: 10px; }
-    button { flex:1; padding: 14px 0; font-size: 16px; border: none; border-radius: 10px; cursor: pointer; }
-    .speak-q { background: #2563eb; color: #fff; }
-    .speak-a { background: #16a34a; color: #fff; }
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #10b981;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text-main);
+      padding-bottom: 80px;
+    }
+    
+    /* Header */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 12px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border-bottom: 1px solid var(--border);
+    }
+    
+    h1 {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 12px 0;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      gap: 12px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .search-box {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 16px;
+      background: #f1f5f9;
+      outline: none;
+      transition: all 0.2s;
+      color: var(--text-main);
+    }
+    
+    .search-box:focus {
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    .mode-switch {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 3px;
+      flex-shrink: 0;
+    }
+    
+    .mode-btn {
+      border: none;
+      background: transparent;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 8px;
+      color: var(--text-sub);
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    
+    .mode-btn.active {
+      background: #fff;
+      color: var(--primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* Content */
+    #content {
+      padding: 20px 16px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .q-badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    
+    .q-text {
+      font-weight: 700;
+      font-size: 19px;
+      margin-bottom: 16px;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+    
+    .a-text {
+      font-size: 17px;
+      margin-bottom: 16px;
+      color: #334155;
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 12px;
+      border-left: 4px solid var(--success);
+    }
+    
+    .cn-text {
+      color: var(--text-sub);
+      font-size: 15px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+      line-height: 1.6;
+    }
+    
+    /* Quiz Mode Specific */
+    .quiz-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-height: 60vh;
+      justify-content: center;
+    }
+    
+    .quiz-info {
+      text-align: center;
+      color: var(--text-sub);
+      font-size: 14px;
+      margin-bottom: -10px;
+    }
+
+    .hidden { display: none !important; }
+    
+    .quiz-controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+      width: 100%;
+    }
+    
+    .btn {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .btn:active { transform: scale(0.98); }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+    
+    .btn-outline {
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+    .btn-outline:hover { background: #f8fafc; }
+    
+    .btn-success {
+      background: var(--success);
+      color: white;
+      box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+    }
+    
+    /* Audio Buttons */
+    .audio-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      width: 100%;
+    }
+    
+    .audio-btn {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-sub);
+      transition: all 0.2s;
+    }
+    
+    .audio-btn:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: var(--primary);
+    }
+    
+    .audio-btn svg { width: 16px; height: 16px; }
+    
+    .hint {
+      text-align: center;
+      color: var(--text-sub);
+      font-size: 14px;
+      margin-top: 32px;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      border: 1px dashed var(--border);
+    }
   </style>
 </head>
 <body>
-  <h1>Rules of the Road – 55 Q&A</h1>
-  <p class="hint">📱 手机背题模式｜大字版｜</p>
 
-  <div id="content"></div>
+<header>
+  <h1>🇮🇪 爱尔兰路考 55 Q&A</h1>
+  <div class="controls">
+    <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜索题目或关键词..." oninput="handleSearch()">
+    <div class="mode-switch">
+      <button class="mode-btn active" onclick="setMode('list')" id="btn-list">列表</button>
+      <button class="mode-btn" onclick="setMode('quiz')" id="btn-quiz">测验</button>
+    </div>
+  </div>
+</header>
 
-  <script>
+<div id="content"></div>
+
+<footer style="text-align: center; padding: 40px 20px; color: var(--text-sub); font-size: 14px; margin-top: 20px;">
+  <p style="margin: 0;">
+    Tom制作 &nbsp;|&nbsp; 
+    <a href="https://xhslink.com/m/3ltN39NlgAQ" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">
+      我的小红书
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+    </a>
+  </p>
+</footer>
+
+<script>
     const data = [
       { q: "When can you overtake on the left?", a: "You can overtake on the left when the vehicle ahead is turning right, when you are turning left immediately after overtaking, or in slow moving traffic.", cn: "什么时候可以从左侧超车？\\n当前车右转；你超车后立刻左转；或在缓慢行驶的车流中。" },
       { q: "At an uncontrolled junction of equal importance to whom would you give the right of way?", a: "Traffic on your right or traffic already in the junction.", cn: "在无信号、同等重要的路口应让谁先行？\\n让右侧来车或已在路口内的车辆先行。" },
@@ -83,47 +352,164 @@
       { q: "If driving alone, how can you check brake lights?", a: "Reverse near a reflective surface and press the brake.", cn: "独自一人如何检查刹车灯？\\n倒车到反光物体前，踩刹车观察反射。" }
     ];
 
-    const container = document.getElementById('content');
+    let state = {
+        mode: 'list',
+        search: '',
+        quizIndex: 0,
+        showAnswer: false,
+        quizOrder: []
+    };
 
-    function speak(text) {
-      const msg = new SpeechSynthesisUtterance(text);
-      msg.lang = 'en-IE';
-      speechSynthesis.speak(msg);
+    function init() {
+        state.quizOrder = Array.from({length: data.length}, (_, i) => i).sort(() => Math.random() - 0.5);
+        render();
     }
 
-    data.forEach((item, i) => {
-      const card = document.createElement('div');
-      card.className = 'card';
+    function setMode(mode) {
+        state.mode = mode;
+        document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`btn-${mode}`).classList.add('active');
+        
+        if (mode === 'quiz') {
+             state.quizIndex = 0;
+             state.showAnswer = false;
+             state.quizOrder = Array.from({length: data.length}, (_, i) => i).sort(() => Math.random() - 0.5);
+        }
+        render();
+    }
 
-      const q = document.createElement('div');
-      q.className = 'q';
-      q.textContent = `${i + 1}. ${item.q}`;
+    function handleSearch() {
+        state.search = document.getElementById('searchInput').value.trim().toLowerCase();
+        if (state.mode === 'quiz' && state.search) {
+            setMode('list');
+        } else {
+            render();
+        }
+    }
 
-      const a = document.createElement('div');
-      a.className = 'a';
-      a.textContent = item.a;
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'en-IE';
+        window.speechSynthesis.speak(msg);
+    }
 
-      const cn = document.createElement('div');
-      cn.className = 'cn';
-      cn.innerHTML = item.cn.split('\\n').join('<br>');
+    function render() {
+        const container = document.getElementById('content');
+        container.innerHTML = '';
+        if (state.mode === 'list') {
+            renderList(container);
+        } else {
+            renderQuiz(container);
+        }
+    }
 
-      const btnRow = document.createElement('div');
-      btnRow.className = 'btn-row';
+    function renderList(container) {
+        const filtered = data.filter(item => 
+            item.q.toLowerCase().includes(state.search) || 
+            item.a.toLowerCase().includes(state.search) ||
+            item.cn.includes(state.search)
+        );
 
-      const btnQ = document.createElement('button');
-      btnQ.className = 'speak-q';
-      btnQ.textContent = '🔊 Question';
-      btnQ.addEventListener('click', () => speak(item.q));
+        if (filtered.length === 0) {
+            container.innerHTML = '<div class="hint">没有找到匹配的题目</div>';
+            return;
+        }
 
-      const btnA = document.createElement('button');
-      btnA.className = 'speak-a';
-      btnA.textContent = '🔊 Answer';
-      btnA.addEventListener('click', () => speak(item.a));
+        filtered.forEach((item) => {
+            // Find original index
+            const originalIndex = data.indexOf(item) + 1;
+            
+            const div = document.createElement('div');
+            div.className = 'card';
+            // Clean up CN text for display
+            const cnText = item.cn.replace(/\\n/g, '<br>');
+            const safeQ = item.q.replace(/'/g, "\\'");
+            const safeA = item.a.replace(/'/g, "\\'");
+            
+            div.innerHTML = `
+                <span class="q-badge">Question ${originalIndex}</span>
+                <div class="q-text">${item.q}</div>
+                <div class="a-text">${item.a}</div>
+                <div class="cn-text">${cnText}</div>
+                <div class="audio-row">
+                    <button class="audio-btn" onclick="speak('${safeQ}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                        朗读问题
+                    </button>
+                    <button class="audio-btn" onclick="speak('${safeA}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                        朗读答案
+                    </button>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
 
-      btnRow.append(btnQ, btnA);
-      card.append(q, a, cn, btnRow);
-      container.appendChild(card);
-    });
-  </script>
+    function renderQuiz(container) {
+        if (state.quizIndex >= data.length) {
+            container.innerHTML = `
+                <div class="card quiz-container" style="text-align:center;">
+                    <h2>🎉 测验完成！</h2>
+                    <p>你已经复习了所有 55 道题目。</p>
+                    <button class="btn btn-primary" onclick="init()">重新开始</button>
+                </div>
+            `;
+            return;
+        }
+
+        const dataIndex = state.quizOrder[state.quizIndex];
+        const item = data[dataIndex];
+        const originalIndex = dataIndex + 1; // 1-based index
+        const cnText = item.cn.replace(/\\n/g, '<br>');
+        const safeQ = item.q.replace(/'/g, "\\'");
+        const safeA = item.a.replace(/'/g, "\\'");
+
+        const div = document.createElement('div');
+        div.className = 'card quiz-container';
+        div.innerHTML = `
+            <div class="quiz-info">进度: ${state.quizIndex + 1} / ${data.length}</div>
+            <span class="q-badge" style="align-self: center;">Question ${originalIndex}</span>
+            <div class="q-text" style="text-align:center; font-size: 22px;">${item.q}</div>
+            
+            <div id="answer-area" class="${state.showAnswer ? '' : 'hidden'}">
+                <div class="a-text">${item.a}</div>
+                <div class="cn-text">${cnText}</div>
+                <div class="audio-row">
+                    <button class="audio-btn" onclick="speak('${safeQ}')">朗读问题</button>
+                    <button class="audio-btn" onclick="speak('${safeA}')">朗读答案</button>
+                </div>
+            </div>
+
+            <div class="quiz-controls">
+                ${!state.showAnswer ? 
+                    `<button class="btn btn-primary" onclick="toggleAnswer(true)">显示答案</button>` : 
+                    `<button class="btn btn-outline" onclick="speak('${safeQ}')">听题</button>
+                     <button class="btn btn-success" onclick="nextQuestion()">下一题</button>`
+                }
+            </div>
+        `;
+        container.appendChild(div);
+    }
+
+    function toggleAnswer(show) {
+        state.showAnswer = show;
+        render();
+        if (show) {
+            // Auto speak answer when shown? Maybe not, let user choose.
+            // But let's speak the question again or just be silent.
+        }
+    }
+
+    function nextQuestion() {
+        state.quizIndex++;
+        state.showAnswer = false;
+        render();
+    }
+
+    // Start
+    init();
+</script>
 </body>
 </html>
